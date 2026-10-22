@@ -1,0 +1,6 @@
+.bin/
+.venv/
+.kubeconfig
+.runtime/
+__pycache__/
+evidence/
