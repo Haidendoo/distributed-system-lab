@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+service MyService {
+
+	rpc CommandStream (stream CommandResponse) returns (stream CommandRequest) {}
+
+	rpc PeriodicReport (MetricReport) returns (CommandRequest) {}
+}
+
+message CommandResponse {
+	string command = 1;
+}
+
+message CommandRequest {
+	string message = 1;
+}
+
+message MetricReport {
+	string time = 1;
+	string hostname = 2;
+	string metric = 3;
+	double value = 4;
+}
+
