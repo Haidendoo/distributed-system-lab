@@ -31,19 +31,7 @@ uv run client.py
 ````
 Client âm thầm chạy các lệnh và gửi về server=)) 
 
-#### Task 2: Implement a server application that collects monitoring data from clients and sends
-control commands to clients for execution.
-##### Terminal 1
 
-```uv
-uv run server2.py
-```
-##### Terminal 2 - n
-
-```uv
- uv run client2.py
-```
-Server có thể nhập lệnh (e.g. ls -la ) Client sẽ chạy và gửi về
 
 
 
