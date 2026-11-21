@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-client
+  namespace: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-client
+  template:
+    metadata:
+      labels:
+        app: kafka-client
+    spec:
+      containers:
+        - name: python
+          image: python:3.10.18-slim-bookworm
+          workingDir: /app
+          command: ["/bin/sh", "-ec"]
+          args:
+            - |
+              pip install --no-cache-dir -r /app/requirements.txt
+              touch /tmp/ready
+              exec sleep infinity
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: PYTHONDONTWRITEBYTECODE
+              value: "1"
+          readinessProbe:
+            exec:
+              command: ["test", "-f", "/tmp/ready"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          volumeMounts:
+            - name: code
+              mountPath: /app
+              readOnly: true
+      volumes:
+        - name: code
+          configMap:
+            name: kafka-client-code
